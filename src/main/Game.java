@@ -2,9 +2,8 @@ package main;
 
 import main.org.alexs.Gameplay;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
+import javax.swing.*;
+import java.awt.*;
 
 public class Game extends JFrame {
 
