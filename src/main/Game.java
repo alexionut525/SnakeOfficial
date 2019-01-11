@@ -7,6 +7,8 @@ import java.awt.*;
 
 public class Game extends JFrame {
 
+
+
     Game() {
         JFrame obj = new JFrame();
         obj.setBounds(10,10,905,700);
@@ -14,12 +16,13 @@ public class Game extends JFrame {
         setResizable(false);
         pack();
 
-        setTitle("Snake");
+        setTitle("Snake: Return");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public static void main(String[] args) {
+
 
         // Creates a new thread so our GUI can process itself
         EventQueue.invokeLater(new Runnable() {
