@@ -1,21 +1,27 @@
 package main.org.alexs;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+
+
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.net.URL;
+
 
 @SuppressWarnings("serial")
-public class Gameplay extends JPanel implements ActionListener {
+public class Gameplay extends JPanel implements ActionListener{
 
-    private ImageIcon titleImage;
+
+
+
 // TODO: Implement a way for the player to win
+
+    //draw the gui screen
+
+
+
+    //draw  menu buttons
+    Rectangle startButton = new Rectangle(150,100,100,25);
+    Rectangle quitButton = new Rectangle(150,150,100,25);
 
     // Holds height and width of the window
     private final static int BOARDWIDTH = 600;
@@ -46,10 +52,14 @@ public class Gameplay extends JPanel implements ActionListener {
     private Snake snake = new Snake();
     private Food food = new Food();
     private ImageIcon foodimage,rightmounth,leftmounth,upmounth,downmounth,snakeimage;
+    private int score = 0;
+    private int lenght = 3;
+    private Image menuImage;
+    private boolean isInMenu = true;
     public Gameplay() {
 
         addKeyListener(new Keys());
-        setBackground(new Color(23, 79, 3));
+        setBackground(new Color(173, 173, 173));
         setFocusable(true);
 
         setPreferredSize(new Dimension(BOARDWIDTH, BOARDHEIGHT));
@@ -62,41 +72,51 @@ public class Gameplay extends JPanel implements ActionListener {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+
         draw(g);
     }
 
     // Draw our Snake & Food (Called on repaint()).
     void draw(Graphics g) {
+
         // Only draw if the game is running / the snake is alive
         if (inGame == true) {
-            foodimage = new ImageIcon("enemy.png");
+            foodimage = new ImageIcon("resource/images/food.png");
             foodimage.paintIcon(this,g,food.getFoodX(),food.getFoodY()); //food image
 
             // Draw our snake.
            for (int i = 0; i < snake.getJoints(); i++) {
-               rightmounth = new ImageIcon("rightmouth.png");
+               rightmounth = new ImageIcon("resource/images/rightmouth.png");
                rightmounth.paintIcon(this, g, snake.getSnakeX(0), snake.getSnakeY(0));
                for ( i = 0; i < snake.getJoints(); i++) {
 
                    if (i == 0 && snake.isMovingLeft()) {
-                       leftmounth = new ImageIcon("leftmouth.png");
+                       leftmounth = new ImageIcon("resource/images/leftmouth.png");
                        leftmounth.paintIcon(this, g, snake.getSnakeX(i), snake.getSnakeY(i));
                    }
                    if (i == 0 && snake.isMovingUp()) {
-                       upmounth = new ImageIcon("upmouth.png");
+                       upmounth = new ImageIcon("resource/images/upmouth.png");
                        upmounth.paintIcon(this, g, snake.getSnakeX(i), snake.getSnakeY(i));
                    }
                    if (i == 0 && snake.isMovingDown()) {
-                       downmounth = new ImageIcon("downmouth.png");
+                       downmounth = new ImageIcon("resource/images/downmouth.png");
                        downmounth.paintIcon(this, g, snake.getSnakeX(i), snake.getSnakeY(i));
                    }
                    if (i != 0) {
-                      snakeimage = new ImageIcon("snakeimage.png");
+                      snakeimage = new ImageIcon("resource/images/snakeimage.png");
                        snakeimage.paintIcon(this, g, snake.getSnakeX(i), snake.getSnakeY(i));
                    }
 
                }
+               //draw the score
+               g.setColor(Color.black);
+               g.setFont(new Font("arial",Font.PLAIN,14));
+               g.drawString("Score: " + score ,5,20);
 
+               //draw the score
+               g.setColor(Color.black);
+               g.setFont(new Font("arial",Font.PLAIN,14));
+               g.drawString("Lenght: " + lenght ,5,40);
 
            }
             // Sync our graphics together
@@ -106,6 +126,8 @@ public class Gameplay extends JPanel implements ActionListener {
             endGame(g);
         }
     }
+
+
 
     void initializeGame() {
         snake.setJoints(3); // set our snake's initial size
@@ -135,6 +157,8 @@ public class Gameplay extends JPanel implements ActionListener {
             System.out.println("intersection");
             // Add a 'joint' to our snake
             snake.setJoints(snake.getJoints() + 1);
+            score ++;
+            lenght ++;
             // Create new food
             food.createFood();
         }
@@ -179,6 +203,8 @@ public class Gameplay extends JPanel implements ActionListener {
 
     void endGame(Graphics g) {
 
+
+
         // Create a message telling the player the game is over
         String message = "Game over";
         String message2 ="Press SPACE to RESTART";
@@ -188,8 +214,10 @@ public class Gameplay extends JPanel implements ActionListener {
         FontMetrics metrics = getFontMetrics(font);
 
         // Set the color of the text to red, and set the font
-        g.setColor(Color.WHITE);
+        g.setColor(Color.black);
         g.setFont(font);
+
+
 
         // Draw the message to the board
         g.drawString(message, (BOARDWIDTH - metrics.stringWidth(message)) / 2,
