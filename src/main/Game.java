@@ -1,5 +1,6 @@
 package main;
 
+
 import main.org.alexs.Gameplay;
 
 import javax.swing.*;
@@ -10,6 +11,8 @@ public class Game extends JFrame {
 
 
     Game() {
+
+
         JFrame obj = new JFrame();
         obj.setBounds(10,10,905,700);
         add(new Gameplay());

@@ -3,7 +3,7 @@ package main.org.alexs;
 
 public class Food {
 
-    private Snake snake = new Snake();
+
     private int foodX; // Stores X pos of our food
     private int foodY; // Stores Y pos of our food
 
@@ -21,9 +21,7 @@ public class Food {
         location = (int) (Math.random() * RANDOMPOSITION);
         foodY = ((location * Gameplay.getDotSize()));
 
-        if ((foodX == snake.getSnakeX(0)) && (foodY == snake.getSnakeY(0))) {
-            createFood();
-        }
+
 
     }
 
